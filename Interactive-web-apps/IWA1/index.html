@@ -1,14 +1,57 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IWA</title>
-</head>
+             
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="Styles.css">
+                    <script src="Script.js" defer></script>
+                </head>
 
-<body>
-    
-</body>
-</html>
+                <title> Tally counter </title>
+
+                        <header class="header">
+                            <h1>Tally Count</h1>
+                        </header>
+
+                            <body>
+                                <aside class="controls"> 
+                                    <label>
+                                        <span>Display</span>
+                                    <select>
+                                        <option>Single</option>
+                                        <option>Multiple</option>
+                                         </select>
+                                        </label>
+
+
+                                    <label>
+                                        <span>Counter</span>
+                                        <select>
+                                            <option>counter 1</option>
+                                            <option>counter 2</option>
+                                            <option>Counter 3</option>
+                                        </select>
+                                     </label>
+
+                                            <button>Settings</button>
+                                </aside>
+
+                               <main class="Counter">
+                                <input class="counter_number" readonly value="0">
+
+                                <button class="Button_counter counter_button_first" >-</button>
+                                <button class="Button_counter" >+</button>
+
+                               </main>
+
+
+
+
+
+                                <footer class="Footer" >
+                                    Inspired by<a href="https://tallycount.app/">Tally Count</a> this is a merely a student practice project for learning
+                                    Javascript.
+                                </footer>
+                            </body>
