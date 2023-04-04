@@ -21,7 +21,7 @@ if ( hourOfDay === 00 && minuteOfDay === 00)
    // console.log(balance)
 
 	
-console.log(balance.toFixed(2))
+console.log('R',balance.toFixed(2))
 }
 
 else{
