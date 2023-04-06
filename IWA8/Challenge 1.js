@@ -20,7 +20,7 @@ const leo ={
 	Age : 24,
 }
 
-	 Address ={
+	 AddressLeo ={
 		Number :leoNumber,
 		Street : leoStreet,
 		Postal_Code :leoPostal,
@@ -35,15 +35,15 @@ Age :62,
 AccessId :'6b279ae5-5657-4240-80e9-23f6b635f7a8',
 Balance : sarahBalance,
 }
-	Address = {
+	AddressSarah = {
 		Number : sarahNumber,
 		StreetName : sarahStreet,
 		postal_Code :sarahPostal,
 	}
 
 
-    console.log(leo, {Address})
-    console.log(sarah, {Address})
+    console.log(leo, {AddressLeo})
+    console.log(sarah, {AddressSarah})
 
 //console.log(leo, leo[address][postal_code])
 //console.log(sarah, sarah[address][postal-code])
