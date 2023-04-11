@@ -20,19 +20,26 @@ const tax = {
 
 const rent = {
     none: 0,
-    'small-room': 200,
-    'large-room': 300,
-    'small-apartment': 400,
-    'large-apartment': 800,
-    'small-house': 1200,
-    'large-house': 2400,
+    smallroom: 200,
+    largeroo: 300,
+    smallapartment: 400,
+    largeapartment: 800,
+    smallhouse: 1200,
+    largehouse: 2400,
 }
 
 // You can change below however you want
 
-const taxAsDecimal = (tax[913]);
-const NewTaxAsDecimal=((taxAsDecimal)/100);
-//const startingAfterTax = salary * 1 - taxAsDecimal;
-//const type = lodging + size;
-//const balance = salary-(expenses[transportExp]+expenses[foodExp])
-console.log(NewTaxAsDecimal)
+const taxAsDecimal = parseInt(tax[913])/100;
+// calculating the amount of tax the person is going to pay with the % of o.12
+
+const SalaryTaxed=salary*taxAsDecimal;
+const startingAfterTax = salary * 1 - SalaryTaxed;
+//console.log(startingAfterTax)
+
+//type is know what which rent is the person paying
+const type = size +lodging;
+//console.log(type)
+
+const balance = startingAfterTax-(expenses.foodExp+expenses.transportExp+rent.largeapartment)
+console.log(balance.toFixed(2))
