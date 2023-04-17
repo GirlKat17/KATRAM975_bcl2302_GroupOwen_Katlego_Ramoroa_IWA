@@ -53,17 +53,25 @@ const futureId = 9
 
 // Do not change code above this comment
 
-console.log(holidays[futureId]|| `ID ${futureId} not created yet`)
-// Create a copy of the Christmas object and update the name and date
 
+
+
+console.log(holidays[futureId]|| `ID ${futureId} not created yet`)
+
+
+
+// Create a copy of the Christmas object and update the name and date
 const christmasCopy = {...holidays[6]}
 christmasCopy.name = 'X-mas Day'
 christmasCopy.date.setHours(0)
 christmasCopy.date.setMinutes(0)
 
+
 // Check if the new date is earlier than the current date and log the result
 const isEarlier = christmasCopy.date.getTime() < holidays[6].date.getTime()
 console.log('New date is earlier:', isEarlier)
+
+
 // Log the changes made to the copied object
 console.log(`ID change: false`)
 console.log(`Name change: ${christmasCopy.name}`)
@@ -71,8 +79,8 @@ console.log(`Date change: ${christmasCopy.date.getDate().toString().padStart(2, 
 // Log the first and last holidays of the year and a randomly selected holiday date
 
 const holidayDates = Object.values(holidays).map(holiday => holiday.date)
-const firstHoliday = new Date(Math.min(holidayDates[3]))
-const lastHoliday = new Date(Math.max(holidayDates[2]))
+const firstHoliday = new Date(Math.min(holidayDates[3])) //Checks the min number 
+const lastHoliday = new Date(Math.max(holidayDates[2]))// checks the max number
 const randomHoliday = holidayDates[Math.floor(Math.random() * holidayDates.length)]
 
 console.log(`First holiday of the year: ${firstHoliday.getDate().toString().padStart(2, '0')}/${(firstHoliday.getMonth() +1).toString().padStart(2, '0')}/${firstHoliday.getFullYear()}`)
