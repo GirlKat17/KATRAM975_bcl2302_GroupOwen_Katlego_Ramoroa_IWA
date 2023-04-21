@@ -22,15 +22,15 @@ const third = data.lists[2][1]
 const result = []
 
 const extractBiggest = () => {
-	const kat = first[first.length-1]
-	const lol = second[second.length-1]
-	const hey = third[third.length-1]
+	const FirstArray = first[first.length-1]
+	const SecondArray = second[second.length-1]
+	const ThirdArray = third[third.length-1]
 
-	if  (kat > lol){
+	if  (FirstArray > SecondArray){
 	 return first.pop()
 	}
 
-     if  (lol > hey) {
+     if  (SecondArray> ThirdArray) {
 		return second.pop()
 	}
 	{
