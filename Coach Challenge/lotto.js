@@ -1,7 +1,9 @@
-let Number= 0(prompt('Enter number'))
-const randomNumber=0
-for (Number=0; Number<5 ; Number++)
-{
-  const randomNumber= Number[Math.floor(Math.random() * Number.length)];
+function myLotto(){
+  let Number= prompt("Enter number");
+
+  for (let i = 0; i <= 45; i++) {
+    text += i + "<br>";
+  }
 }
+
 
