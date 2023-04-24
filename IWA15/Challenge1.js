@@ -2,7 +2,7 @@ const data = {
 	lists: [
 		['first', [15, 11, 13, 7, 5]],
 		['second', [2, 6, 8, 4, 14, 12, 10]],
-		['third', [9, 3, 1]],
+		['third', [9, 3, 1,2,1]],
 	]
 }
 
@@ -19,8 +19,16 @@ const second = data.lists[1][1]
 
 const third = data.lists[2][1]
 
-const result = []
+//const result = []
+//const {
+	//lists: [
+	//	[, first],
+	//	[, second],
+	//	[, third],
+	//]
+//} = data
 
+const result = []
 const extractBiggest = () => {
 	const FirstArray = first[first.length-1]
 	const SecondArray = second[second.length-1]
