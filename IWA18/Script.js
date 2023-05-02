@@ -1,6 +1,91 @@
-import * as dataFile from "./data.js"; // imports all exports fromm data.js as a big object.
-import * as viewFile from "./view.js"; // imports all exports from view.js as a big object.
-//import { getPrimes } from "/modules/getPrimes.js";
+import { createOrderData } from "./data.js";
+import { updateDragging } from "./data.js";
+import { createOrderHtml } from "./view.js";
+import { html } from "./view.js";
+import { updateDraggingHtml } from "./view.js";
+const handleHelpToggle = (event) => {
+  const overlay = html.help.overlay;
+  overlay.show();
+  if (event.target === html.help.cancel) {
+    overlay.close();
+  }
+};
+const handleAddToggle = (e) => {
+  html.other.add.focus();
+  const overlay = html.add.overlay;
+  overlay.show();
+  if (e.target === html.add.cancel) {
+    overlay.close();
+    html.add.form.reset();
+  }
+};
+const handleAddSubmit = (e) => {
+  e.preventDefault();
+  const overlay = html.add.overlay;
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  const newData = createOrderData(data);
+  const htmlData = createOrderHtml(newData);
+  const append = document.querySelector('[data-area="ordered"]');
+  e.target.reset();
+  overlay.close();
+  append.appendChild(htmlData);
+};
+const handleEditToggle = (e) => {
+  const overlay = html.edit.overlay;
+  const cancelBtn = html.edit.cancel;
+  const input = html.edit.title;
+  const select = html.edit.table;
+  const option = html.edit.column;
+  e.target.dataset.id ? overlay.show() : undefined;
+  const id = e.target.dataset.id ? e.target.dataset.id : undefined;
+  input.value = e.target.dataset.id
+    ? e.target.querySelector(".order__title").textContent
+    : undefined;
+  select.value = e.target.dataset.id
+    ? e.target.querySelector(".order__value").textContent
+    : undefined;
+  let section = document.querySelector(`[data-id="${id}"]`);
+  option.value = section ? section.closest("section").dataset.area : "";
+  if (e.target === cancelBtn) {
+    overlay.close();
+  }
+  html.edit.delete.id = id;
+};
+const handleEditSubmit = (e) => {
+  e.preventDefault();
+  const idRemove = html.edit.delete.id;
+  const orderDelete = document.querySelector(`[data-id="${idRemove}"]`);
+  orderDelete.remove();
+  const overlay = html.edit.overlay;
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  const newData = createOrderData(data);
+  const htmlData = createOrderHtml(newData);
+  const appended = document.querySelector(`[data-area="${newData.column}"]`);
+  appended.appendChild(htmlData);
+  e.target.reset();
+  overlay.close();
+};
+const handleDelete = (e) => {
+  const idToBeDeleted = html.edit.delete.id;
+  const orderToBeDeleted = document.querySelector(
+    `[data-id="${idToBeDeleted}"]`
+  );
+  const overlay = html.edit.overlay;
+  orderToBeDeleted.remove();
+  overlay.close();
+};
+html.add.cancel.addEventListener("click", handleAddToggle); //
+html.other.add.addEventListener("click", handleAddToggle); //
+html.add.form.addEventListener("submit", handleAddSubmit); //
+html.other.grid.addEventListener("click", handleEditToggle); //
+html.edit.cancel.addEventListener("click", handleEditToggle); //
+html.edit.form.addEventListener("submit", handleEditSubmit); //
+html.edit.delete.addEventListener("click", handleDelete); //
+html.help.cancel.addEventListener("click", handleHelpToggle); //
+html.other.help.addEventListener("click", handleHelpToggle); //
+//Dragging events
 /**
  * A handler that fires when a user drags over any element inside a column. In
  * order to determine which column the user is dragging over the entire event
@@ -12,108 +97,37 @@ import * as viewFile from "./view.js"; // imports all exports from view.js as a 
  *
  * @param {Event} event
  */
-const handleDragStart = (event) => {
-    event.preventDefault(); // This stops the default action the browser has of trying to open it once its clicked so that now it can be dragged.
-}
 const handleDragOver = (event) => {
-   handleDragStart()
-   viewFile.updateDraggingHtml()
-    const path = event.path || event.composedPath()
-    /*Gets the lists of elements that the event is being passed through.
-    * So it basically gains access to those elements so that they can be used.
-     */
-    let column = null // Will later be used to show the column the user is currently dragging over.
-    for (const element of path) {  //The for loop iterates over the elements the event is passing through.
-        const { area } = element.dataset //Used to mark the different columns on the page using the data-attribute values as headings.
-        if (area) { // Checks if the data-area attribute exists for the current element then sets column to its value.
-            column = area
-            break;
-        }
+  event.preventDefault();
+  const path = event.path || event.composedPath();
+  let column = null;
+  for (const element of path) {
+    const { area } = element.dataset;
+    if (area) {
+      column = area;
+      break;
     }
-    if (!column) return
-    updateDragging({ over: column })
-    updateDraggingHtml({ over: column })
-}
-const handleDragEnd = (event) => {
-   event.preventDefault();
-    handleDragOver();
-}
-const handleHelpToggle = (event) => {
-    viewFile.html.help.overlay.show()
-    event.preventDefault();
-}
-const handleHelpCancelToggle = (event) => {
-   event.preventDefault();
-    viewFile.html.help.overlay.close();
- };
-const handleAddToggle = (event) => {
-    viewFile.html.add.overlay.show()
-    const path = event.path || event.composedPath()
-    let order = null
-    for (const element of path) { // The for loop iterates over the elements the event is passing through.
-        const { add } = element.dataset
-        if (add) { // Checks if the data-add attribute exists for the current element.
-            order = add
-            break;
-        }
-    }
-    // Reset the form.
-    event.target.reset();
-}
-//Added a function
-const handleCancelToggle = (event) => {
-    event.preventDefault();
-    viewFile.html.add.overlay.close();
-}
-const handleAddSubmit = (event) => {
-    event.preventDefault();
-    const overlay = viewFile.html.add.overlay;
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries()); // Create a new object.
-    const newData = dataFile.createOrderData(data);
-    const htmlData = viewFile.createOrderHtml(newData);
-    const append = document.querySelector('[data-area="ordered"]');
-    event.target.reset();
-    overlay.close();
-    append.appendChild(htmlData);
- };
-const handleEditToggle = (event) => {
-    viewFile.html.edit.overlay.show();
-    event.preventDefault(); // Prevents the page from reloading or going to the next page (default behavior).
-}
-const handleEditSubmit = (event) => {
-    event.preventDefault();
-    const overlay = viewFile.html.edit.overlay;
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries()); // Create a new object.
-    const newData = viewFile.moveToColumn(data);
-    const append = document.querySelector('.grid');
-    event.target.reset();
-    overlay.close();
-    append.appendChild(newData);
-  };
-  const handleEditClose = (event) => {
-    event.preventDefault();
-    viewFile.html.edit.overlay.close()
-}
-const handleDelete = (event) => {
-    event.preventDefault();
-    viewFile.html.edit.overlay.delete()
-}
- //pass the function reference without parenthesis so that the function runs when actual click event occurs.
-viewFile.html.add.cancel.addEventListener('click', handleCancelToggle)
-viewFile.html.other.add.addEventListener('click', handleAddToggle)
-viewFile.html.add.form.addEventListener('submit', handleAddSubmit)
-viewFile.html.other.grid.addEventListener('click', handleEditToggle)
-viewFile.html.edit.cancel.addEventListener('click', handleEditClose)
-viewFile.html.edit.form.addEventListener('submit', handleEditSubmit)
-viewFile.html.edit.delete.addEventListener('click', handleDelete)
-viewFile.html.help.cancel.addEventListener('click', handleHelpCancelToggle )
-viewFile.html.other.help.addEventListener('click', handleHelpToggle)
-for (const htmlColumn of Object.values(html.columns)) {
-    htmlColumn.addEventListener('dragstart', handleDragStart)
-    htmlColumn.addEventListener('dragend', handleDragEnd)
-}
+  }
+  if (!column) return;
+  updateDragging({ over: column });
+  updateDraggingHtml({ over: column });
+};
+
+
+let dragged;
+const handleDragStart = (e) => {
+  dragged = e.target;
+};
+const handleDragDrop = (e) => {
+  e.target.append(dragged);
+};
+const handleDragEnd = (e) => {
+  const background = e.target.closest("section");
+  background.style.backgroundColor = "";
+};
 for (const htmlArea of Object.values(html.area)) {
-    htmlArea.addEventListener('dragover', handleDragOver)
+  htmlArea.addEventListener("dragover", handleDragOver);
+  htmlArea.addEventListener("dragstart", handleDragStart);
+  htmlArea.addEventListener("drop", handleDragDrop);
+  htmlArea.addEventListener("dragend", handleDragEnd);
 }
