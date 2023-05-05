@@ -17,6 +17,8 @@ const data = {
     requestType: "FETCH_ATHLETE_DATA",
     requestBy: "ALL_MATCHING_ATHLETES",
     forDisplay: "BEST_RACES",
+    
+    
     data: {
       NM372: {
         firstName: "Nwabisa",
@@ -33,6 +35,9 @@ const data = {
           },
         ],
       },
+      
+      
+      
       SV782: {
         firstName: "Schalk",
         surname: "Venter",
@@ -69,7 +74,9 @@ const createHtml = (athlete) => {
   const date = new Date(data.response.data[athlete].races[races-1].date)
   const time = data.response.data[athlete].races[races-1].time;
   const fragment = document.createDocumentFragment();
+
   let title = document.createElement('h2');
+
   title.textContent = id
   fragment.appendChild(title);
   const list = document.createElement('dl');
@@ -77,13 +84,16 @@ const createHtml = (athlete) => {
   const month = MONTHS[date.getMonth()];
   const year = date.getFullYear();
   console.log(month)
+
   let sum = 0
   let i = 0;
   while ( i < time.length ) {
     sum += time[i]
     i++
   }
+
   const minutes = sum % 60;
+  //proper index
   const hours = (sum - minutes) / 60;
   list.innerHTML = /* html */ `
       <dt>Athlete: ${firstName +' '+ surname}</dt>

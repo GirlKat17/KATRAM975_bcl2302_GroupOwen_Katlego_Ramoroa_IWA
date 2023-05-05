@@ -27,11 +27,15 @@ const createArray = (length) => {
 const createData = function(){
     const current = new Date();
     current.setDate(1);
+    //I assigned a const its wasnt there 
     const startDay = current.getDay();
     const daysInMonth = getDaysInMonth(current);
+    
     const weeks = createArray(6);
     const days = createArray(7);
      let result = [] //value = null
+
+
     for (let weekIndex = 0; weekIndex < weeks.length; weekIndex++) {
         let value = {
             week: weekIndex + 1,

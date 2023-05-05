@@ -3,6 +3,9 @@ import { updateDragging } from "./data.js";
 import { createOrderHtml } from "./view.js";
 import { html } from "./view.js";
 import { updateDraggingHtml } from "./view.js";
+
+
+
 const handleHelpToggle = (event) => {
   const overlay = html.help.overlay;
   overlay.show();
@@ -10,6 +13,8 @@ const handleHelpToggle = (event) => {
     overlay.close();
   }
 };
+
+
 const handleAddToggle = (e) => {
   html.other.add.focus();
   const overlay = html.add.overlay;
@@ -19,6 +24,9 @@ const handleAddToggle = (e) => {
     html.add.form.reset();
   }
 };
+
+
+
 const handleAddSubmit = (e) => {
   e.preventDefault();
   const overlay = html.add.overlay;
@@ -31,12 +39,15 @@ const handleAddSubmit = (e) => {
   overlay.close();
   append.appendChild(htmlData);
 };
+
+
 const handleEditToggle = (e) => {
   const overlay = html.edit.overlay;
   const cancelBtn = html.edit.cancel;
   const input = html.edit.title;
   const select = html.edit.table;
   const option = html.edit.column;
+
   e.target.dataset.id ? overlay.show() : undefined;
   const id = e.target.dataset.id ? e.target.dataset.id : undefined;
   input.value = e.target.dataset.id
@@ -52,6 +63,8 @@ const handleEditToggle = (e) => {
   }
   html.edit.delete.id = id;
 };
+
+
 const handleEditSubmit = (e) => {
   e.preventDefault();
   const idRemove = html.edit.delete.id;
@@ -67,6 +80,9 @@ const handleEditSubmit = (e) => {
   e.target.reset();
   overlay.close();
 };
+
+
+
 const handleDelete = (e) => {
   const idToBeDeleted = html.edit.delete.id;
   const orderToBeDeleted = document.querySelector(
@@ -76,8 +92,12 @@ const handleDelete = (e) => {
   orderToBeDeleted.remove();
   overlay.close();
 };
+
+
+
 html.add.cancel.addEventListener("click", handleAddToggle); //
 html.other.add.addEventListener("click", handleAddToggle); //
+
 html.add.form.addEventListener("submit", handleAddSubmit); //
 html.other.grid.addEventListener("click", handleEditToggle); //
 html.edit.cancel.addEventListener("click", handleEditToggle); //
@@ -114,17 +134,24 @@ const handleDragOver = (event) => {
 };
 
 
+
 let dragged;
 const handleDragStart = (e) => {
   dragged = e.target;
 };
+
+
 const handleDragDrop = (e) => {
   e.target.append(dragged);
 };
+
+
 const handleDragEnd = (e) => {
   const background = e.target.closest("section");
   background.style.backgroundColor = "";
 };
+
+
 for (const htmlArea of Object.values(html.area)) {
   htmlArea.addEventListener("dragover", handleDragOver);
   htmlArea.addEventListener("dragstart", handleDragStart);
